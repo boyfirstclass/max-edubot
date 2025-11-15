@@ -19,50 +19,50 @@ EduMaxBot — учебный бот для MAX
 
 Структура репозитория:
 
-EduMaxBot/
-  EduMaxBot.csproj
-  appsettings.json            (пример)
-  Program.cs
-  Controllers/
-    WebhookController.cs
-  Integrations/
-    MaxApiClient.cs
-    MaxApiOptions.cs
-  Data/
-    AppDbContext.cs
-  Models/
-    User.cs
-    Group.cs
-    GroupMember.cs
-    GroupRole.cs
-    InviteToken.cs
-    Assignment.cs
-    AssignmentVariant.cs
-    Submission.cs
-    SubmissionStatus.cs
-    ReviewSession.cs
-  Services/
-    RegistrationService.cs
-    GroupService.cs
-    AssignmentService.cs
-    ReviewService.cs
-  Transport/
-    UpdateDto.cs           
+EduMaxBot/  
+  EduMaxBot.csproj  
+  appsettings.json  
+  Program.cs  
+  Controllers/  
+    WebhookController.cs  
+  Integrations/  
+    MaxApiClient.cs  
+    MaxApiOptions.cs  
+  Data/  
+    AppDbContext.cs  
+  Models/  
+    User.cs  
+    Group.cs  
+    GroupMember.cs  
+    GroupRole.cs  
+    InviteToken.cs  
+    Assignment.cs  
+    AssignmentVariant.cs  
+    Submission.cs  
+    SubmissionStatus.cs  
+    ReviewSession.cs  
+  Services/  
+    RegistrationService.cs  
+    GroupService.cs  
+    AssignmentService.cs  
+    ReviewService.cs  
+  Transport/  
+    UpdateDto.cs             
 
 Минимально нужно:
-.NET SDK 8.0
-ASP.NET Core Runtime 8.0
-PostgreSQL 14+ 
-доступ к MAX Platform API:
-        токен бота
-        secret для вебхука
-        домен для вебхука
-Docker (или Podman с docker-совместимым CLI), если хотите запускать в контейнере
+.NET SDK 8.0  
+ASP.NET Core Runtime 8.0  
+PostgreSQL 14+   
+доступ к MAX Platform API:  
+        токен бота  
+        secret для вебхука  
+        домен для вебхука  
+Docker (или Podman с docker-совместимым CLI), если хотите запускать в контейнере  
 
-СБОРКА И ЗАПУСК:
-Настройка PostgreSQL
+СБОРКА И ЗАПУСК:  
+Настройка PostgreSQL  
 
-Создайте БД:
+Создайте БД:  
 
 ~ sudo -u postgres psql
 
