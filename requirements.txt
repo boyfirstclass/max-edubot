@@ -1,0 +1,10 @@
+dotnet-sdk==8.0
+aspnetcore-runtime==8.0
+
+postgresql>=14
+
+libpq-dev
+ca-certificates
+
+// Здесь только внешние требоавния! nuget зависимости лежат в MaxEduBot/MaxEduBot.csproj, через 
+// dotnet restore их можно легко восставновить
