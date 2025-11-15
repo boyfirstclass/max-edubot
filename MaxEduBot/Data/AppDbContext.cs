@@ -20,31 +20,26 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(b);
 
-        // ---------- Users ----------
         b.Entity<User>(e =>
         {
             e.ToTable("Users");
             e.HasKey(x => x.UserId);
         });
 
-        // ---------- Groups -> BotGroups ----------
         b.Entity<Group>(e =>
         {
-            // ВАЖНО: используем таблицу "BotGroups", а не "Groups"
             e.ToTable("BotGroups");
             e.HasKey(x => x.Id);
             e.Property(x => x.Name).IsRequired();
             e.HasIndex(x => x.OwnerId);
         });
 
-        // ---------- GroupMembers ----------
         b.Entity<GroupMember>(e =>
         {
             e.ToTable("GroupMembers");
             e.HasKey(x => new { x.GroupId, x.UserId });
         });
 
-        // ---------- InviteTokens ----------
         b.Entity<InviteToken>(e =>
         {
             e.ToTable("InviteTokens");
@@ -52,7 +47,6 @@ public class AppDbContext : DbContext
             e.HasIndex(x => x.GroupId);
         });
 
-        // ---------- Assignments ----------
         b.Entity<Assignment>(e =>
         {
             e.ToTable("Assignments");
@@ -60,14 +54,12 @@ public class AppDbContext : DbContext
             e.HasIndex(x => x.GroupId);
         });
 
-        // ---------- AssignmentVariants ----------
         b.Entity<AssignmentVariant>(e =>
         {
             e.ToTable("AssignmentVariants");
             e.HasKey(x => new { x.AssignmentId, x.UserId });
         });
 
-        // ---------- Submissions ----------
         b.Entity<Submission>(e =>
         {
             e.ToTable("Submissions");
@@ -75,7 +67,6 @@ public class AppDbContext : DbContext
             e.HasIndex(x => new { x.AssignmentId, x.Status, x.SubmittedAt });
         });
 
-        // ---------- ReviewSessions ----------
         b.Entity<ReviewSession>(e =>
         {
             e.ToTable("ReviewSessions");
