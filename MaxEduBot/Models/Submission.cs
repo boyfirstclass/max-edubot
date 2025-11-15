@@ -13,11 +13,9 @@ public class Submission
     public DateTime SubmittedAt { get; set; }
     public SubmissionStatus Status { get; set; } = SubmissionStatus.Pending;
 
-    // блокировка на проверку
     public long? LockedByReviewerId { get; set; }
     public DateTime? LockedAtUtc { get; set; }
 
-    // оценка
     public int? Score { get; set; }
     public string? Comment { get; set; }
     public DateTime? ReviewedAtUtc { get; set; }
