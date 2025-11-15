@@ -75,34 +75,34 @@ CREATE DATABASE edumaxbot;
 
 При первом запуске на пустой БД схема создаётся автоматически через EnsureCreated().
 ЛОКАЛЬНО БЕЗ ДОКЕРА:
-~ git clone https://github.com/ВАШ_АККАУНТ/ВАШ_РЕПОЗИТОРИЙ.git
-~ cd ВАШ_РЕПОЗИТОРИЙ/MaxEduBot
+~ git clone https://github.com/ВАШ_АККАУНТ/ВАШ_РЕПОЗИТОРИЙ.git  
+~ cd ВАШ_РЕПОЗИТОРИЙ/MaxEduBot  
 
-~ export POSTGRES_CONNECTION_STRING="Host=127.0.0.1;Port=5432;Database=edumaxbot;Username=postgres;Password=postgres"
-~ export MaxApi__BaseUrl="https://platform-api.max.ru/"
-~ export MaxApi__Token="MAX_BOT_TOKEN_HERE"
-~ export MaxApi__WebhookSecret="MAX_WEBHOOK_SECRET_HERE"
-~ export ASPNETCORE_ENVIRONMENT=Development
+~ export POSTGRES_CONNECTION_STRING="Host=127.0.0.1;Port=5432;Database=edumaxbot;Username=postgres;Password=postgres"  
+~ export MaxApi__BaseUrl="https://platform-api.max.ru/"  
+~ export MaxApi__Token="MAX_BOT_TOKEN_HERE"  
+~ export MaxApi__WebhookSecret="MAX_WEBHOOK_SECRET_HERE"  
+~ export ASPNETCORE_ENVIRONMENT=Development  
 
-~ dotnet restore
-~ dotnet build
-~ dotnet run
+~ dotnet restore  
+~ dotnet build  
+~ dotnet run  
 
 В ДОКЕРЕ:
-~ cd MaxEduBot
-~ docker build -t maxedubot .
+~ cd MaxEduBot  
+~ docker build -t maxedubot .  
 
-~ docker run -d --name maxedubot \
-~   --net host \
-~   -e ASPNETCORE_ENVIRONMENT=Production \
-~   -e POSTGRES_CONNECTION_STRING="Host=127.0.0.1;Port=5432;Database=edumaxbot;Username=postgres;Password=postgres" \
-~   -e MaxApi__BaseUrl="https://platform-api.max.ru/" \
-~   -e MaxApi__Token="MAX_BOT_TOKEN_HERE" \
-~   -e MaxApi__WebhookSecret="MAX_WEBHOOK_SECRET_HERE" \
-~   maxedubot
+~ docker run -d --name maxedubot \  
+~   --net host \  
+~   -e ASPNETCORE_ENVIRONMENT=Production \  
+~   -e POSTGRES_CONNECTION_STRING="Host=127.0.0.1;Port=5432;Database=edumaxbot;Username=postgres;Password=postgres" \  
+~   -e MaxApi__BaseUrl="https://platform-api.max.ru/" \  
+~   -e MaxApi__Token="MAX_BOT_TOKEN_HERE" \  
+~   -e MaxApi__WebhookSecret="MAX_WEBHOOK_SECRET_HERE" \  
+~   maxedubot  
 
-~ docker logs -f maxedubot # проверка что все нормально запустилось
+~ docker logs -f maxedubot # проверка что все нормально запустилось  
 
-# ожидаем такое:
-Now listening on: http://0.0.0.0:5000
-Application started. ...
+# ожидаем такое:  
+Now listening on: http://0.0.0.0:5000  
+Application started. ...  
