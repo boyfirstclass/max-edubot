@@ -61,11 +61,8 @@ public class ReviewService
         return rs?.Active == true;
     }
 
-    /// <summary>Отправляет следующую работу преподавателю (если есть).</summary>
     public async Task SendNextForReviewAsync(long reviewerId, Guid assignmentId)
     {
-        // атомарно "выхватываем" следующую работу (FIFO) при помощи SKIP LOCKED,
-        // чтобы несколько преподавателей не получили одну и ту же работу.
         var claimedId = await ClaimNextSubmissionIdAsync(reviewerId, assignmentId);
         if (claimedId is null)
         {
@@ -87,7 +84,6 @@ public class ReviewService
             $"\nОцените командой:\n/grade {sub.Id} <0..100> | <комментарий>");
     }
 
-    /// <summary>Проставить оценку и разослать уведомления.</summary>
     public async Task<OpResult> GradeAsync(long reviewerId, Guid submissionId, int score, string? comment)
     {
         if (score < 0 || score > 100) return new(false, "Оценка 0..100");
@@ -99,7 +95,6 @@ public class ReviewService
         if (!await _groups.IsTeacherAsync(a.GroupId, reviewerId))
             return new(false, "Только преподаватель группы");
 
-        // Проверим, что эта работа «забронирована» за преподавателем
         if (sub.Status == SubmissionStatus.Pending)
             return new(false, "Эта работа ещё не выдана на проверку (используйте /start_review)");
 
@@ -114,7 +109,6 @@ public class ReviewService
 
         await _db.SaveChangesAsync();
 
-        // уведомим студента
         await _max.SendTextAsync(sub.UserId,
             $"Ваша работа по `{a.Title}` проверена ✅\n" +
             $"Оценка: {score}\n" +
@@ -123,10 +117,6 @@ public class ReviewService
         return new(true, AssignmentId: a.Id);
     }
 
-    /// <summary>
-    /// Возвращает Id захваченной записи Submissions (или null), помечая её как InReview и locked_by = reviewerId.
-    /// Реализовано на чистом SQL с RETURNING и SKIP LOCKED.
-    /// </summary>
     private async Task<Guid?> ClaimNextSubmissionIdAsync(long reviewerId, Guid assignmentId)
     {
         await using var conn = _db.Database.GetDbConnection();
