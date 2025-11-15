@@ -49,8 +49,9 @@ EduMaxBot/
         ReviewService.cs  
     Transport/  
         UpdateDto.cs
-```           
-
+```
+           
+```
 Минимально нужно:
 .NET SDK 8.0  
 ASP.NET Core Runtime 8.0  
@@ -60,7 +61,8 @@ PostgreSQL 14+
         secret для вебхука  
         домен для вебхука  
 Docker (или Podman с docker-совместимым CLI), если хотите запускать в контейнере  
-
+```
+```
 СБОРКА И ЗАПУСК:  
 Настройка PostgreSQL  
 
@@ -108,3 +110,4 @@ CREATE DATABASE edumaxbot;
 # ожидаем такое:  
 Now listening on: http://0.0.0.0:5000  
 Application started. ...  
+```
