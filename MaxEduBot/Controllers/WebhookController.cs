@@ -44,7 +44,6 @@ public class WebhookController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] UpdateDto update)
     {
-        // Проверка секрета
         var secret = Request.Headers["X-Max-Bot-Api-Secret"].ToString();
         if (!string.IsNullOrEmpty(_opt.Value.WebhookSecret) &&
             secret != _opt.Value.WebhookSecret)
@@ -63,7 +62,6 @@ public class WebhookController : ControllerBase
 
         var isReg = await _db.Users.AnyAsync(u => u.UserId == userId);
 
-        // /start
         if (text.Equals("/start", StringComparison.OrdinalIgnoreCase))
         {
             if (isReg)
@@ -92,7 +90,6 @@ public class WebhookController : ControllerBase
             return Ok();
         }
 
-        // /help
         if (text.Equals("/help", StringComparison.OrdinalIgnoreCase))
         {
             await _max.SendTextAsync(userId,
@@ -110,7 +107,6 @@ public class WebhookController : ControllerBase
             return Ok();
         }
 
-        // Регистрация: "Имя Фамилия" (если не зарегистрирован)
         if (!isReg && !text.StartsWith("/"))
         {
             var ok = await _reg.TryRegisterAsync(userId, username, text);
@@ -130,7 +126,6 @@ public class WebhookController : ControllerBase
             return Ok();
         }
 
-        // Остальные команды — только для зарегистрированных
         if (!isReg)
         {
             await _max.SendTextAsync(userId,
@@ -138,7 +133,6 @@ public class WebhookController : ControllerBase
             return Ok();
         }
 
-        // --- Группы ---
         if (text.StartsWith("/create_group", StringComparison.OrdinalIgnoreCase))
         {
             var name = text.Substring("/create_group".Length).Trim();
@@ -218,10 +212,8 @@ public class WebhookController : ControllerBase
             return Ok();
         }
 
-        // --- Задания ---
         if (text.StartsWith("/new_assignment", StringComparison.OrdinalIgnoreCase))
         {
-            // формат: /new_assignment <GroupId> | <Variants 1..100> | <Deadline UTC yyyy-MM-dd HH:mm> | <Title> | <Description?>
             var payload = text.Substring("/new_assignment".Length).Trim();
             var parts = payload.Split('|', StringSplitOptions.TrimEntries);
             if (parts.Length < 4)
@@ -251,13 +243,11 @@ public class WebhookController : ControllerBase
             }
 
             await _max.SendTextAsync(userId, $"Задание создано ✅\nAssignmentId: `{result.AssignmentId}`\nВариантов: {variants}\nДедлайн (UTC): {deadlineUtc:yyyy-MM-dd HH:mm}\n\nРассылаю студентам...");
-            // Рассылка студентам — внутри сервиса уже сделана
             return Ok();
         }
 
         if (text.StartsWith("/submit", StringComparison.OrdinalIgnoreCase))
         {
-            // формат: /submit <AssignmentId> | <TextOrUrl>
             var payload = text.Substring("/submit".Length).Trim();
             var parts = payload.Split('|', 2, StringSplitOptions.TrimEntries);
             if (parts.Length < 2 || !Guid.TryParse(parts[0], out var assignmentId))
@@ -272,7 +262,6 @@ public class WebhookController : ControllerBase
             return Ok();
         }
 
-        // --- Проверка ---
         if (text.StartsWith("/start_review", StringComparison.OrdinalIgnoreCase))
         {
             var arg = text.Substring("/start_review".Length).Trim();
@@ -286,7 +275,6 @@ public class WebhookController : ControllerBase
             await _max.SendTextAsync(userId, res.Ok ? "Режим проверки запущен ✅" : ("Не удалось: " + res.Error));
             if (res.Ok)
             {
-                // сразу отправим первую работу
                 await _reviews.SendNextForReviewAsync(userId, assignmentId);
             }
             return Ok();
@@ -307,9 +295,8 @@ public class WebhookController : ControllerBase
 
         if (text.StartsWith("/grade", StringComparison.OrdinalIgnoreCase))
         {
-            // формат: /grade <SubmissionId> <Score> | <Comment>
             var payload = text.Substring("/grade".Length).Trim();
-            var parts = payload.Split('|', 2, StringSplitOptions.TrimEntries); // [ "subId score", "comment" ]
+            var parts = payload.Split('|', 2, StringSplitOptions.TrimEntries);
             if (parts.Length == 0)
             {
                 await _max.SendTextAsync(userId, "Использование: /grade <SubmissionId> <Score 0..100> | <Комментарий>");
@@ -328,21 +315,18 @@ public class WebhookController : ControllerBase
 
             if (res.Ok && await _reviews.IsSessionActiveAsync(userId, res.AssignmentId!.Value))
             {
-                // подкинем следующую
                 await _reviews.SendNextForReviewAsync(userId, res.AssignmentId!.Value);
             }
 
             return Ok();
         }
 
-        // Неизвестная команда
         await _max.SendTextAsync(userId, "Не знаю такую команду. Попробуйте /help.");
         return Ok();
     }
 
     private static string? ExtractUrl(string text)
     {
-        // очень простой парсер URL в тексте
         var parts = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         foreach (var p in parts)
         {
