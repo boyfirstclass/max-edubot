@@ -19,6 +19,7 @@ EduMaxBot — учебный бот для MAX
 
 Структура репозитория:
 
+```
 EduMaxBot/  
     EduMaxBot.csproj  
     appsettings.json  
@@ -47,7 +48,8 @@ EduMaxBot/
         AssignmentService.cs  
         ReviewService.cs  
     Transport/  
-        UpdateDto.cs             
+        UpdateDto.cs
+```           
 
 Минимально нужно:
 .NET SDK 8.0  
