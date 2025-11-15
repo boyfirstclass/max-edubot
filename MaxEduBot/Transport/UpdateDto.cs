@@ -32,5 +32,4 @@ public class RecipientDto
 public class MessageBodyDto
 {
     public string? text { get; set; }
-    // при необходимости сюда можно добавить поля вложений/файлов
 }
