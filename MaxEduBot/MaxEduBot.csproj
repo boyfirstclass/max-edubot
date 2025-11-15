@@ -3,7 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <NoWarn>NU1605</NoWarn> <!-- Отключаем предупреждения о конфликтах версий -->
+    <NoWarn>NU1605</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,3 +16,4 @@
     <Compile Remove="Migrations\**\*.cs" />
   </ItemGroup>
 </Project>
+
