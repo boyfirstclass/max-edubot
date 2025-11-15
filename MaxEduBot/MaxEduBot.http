@@ -1,0 +1,6 @@
+@MaxEduBot_HostAddress = http://localhost:5287
+
+GET {{MaxEduBot_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

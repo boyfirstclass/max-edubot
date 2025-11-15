@@ -1,0 +1,4 @@
+/root/max-edubot/MaxEduBot/obj/Debug/net7.0/MaxEduBot.GeneratedMSBuildEditorConfig.editorconfig
+/root/max-edubot/MaxEduBot/obj/Debug/net7.0/MaxEduBot.AssemblyInfoInputs.cache
+/root/max-edubot/MaxEduBot/obj/Debug/net7.0/MaxEduBot.AssemblyInfo.cs
+/root/max-edubot/MaxEduBot/obj/Debug/net7.0/MaxEduBot.csproj.CoreCompileInputs.cache

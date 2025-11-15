@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  db:
+    image: docker.io/library/postgres:16-alpine
+    container_name: edumaxbot-db
+    environment:
+      POSTGRES_DB: edumaxbot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - edumaxbot_pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  maxedubot:
+    build:
+      context: ./MaxEduBot
+      dockerfile: Dockerfile
+    container_name: maxedubot
+    depends_on:
+      - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      # То, что читает Program.cs:
+      POSTGRES_CONNECTION_STRING: "Host=db;Port=5432;Database=edumaxbot;Username=postgres;Password=postgres"
+      MaxApi__BaseUrl: "https://platform-api.max.ru/"
+      MaxApi__Token: "СЮДА_ТОКЕН_БОТА_ИЗ_MAX"
+      MaxApi__WebhookSecret: "СЮДА_ТОТ_СЕКРЕТ_ЧТО_ТЫ_УКАЗАЛ_В_WEBHOOK"
+    ports:
+      - "5000:5000"   # хост:контейнер
+    restart: unless-stopped
+
+volumes:
+  edumaxbot_pgdata:
