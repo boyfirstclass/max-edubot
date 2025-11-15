@@ -24,30 +24,30 @@ EduMaxBot/
     appsettings.json  
     Program.cs  
     Controllers/  
-      WebhookController.cs  
+        WebhookController.cs  
     Integrations/  
-      MaxApiClient.cs  
-      MaxApiOptions.cs  
+        MaxApiClient.cs  
+        MaxApiOptions.cs  
     Data/  
-      AppDbContext.cs  
+        AppDbContext.cs  
     Models/  
-      User.cs  
-      Group.cs  
-      GroupMember.cs  
-      GroupRole.cs  
-      InviteToken.cs  
-      Assignment.cs  
-      AssignmentVariant.cs  
-      Submission.cs  
-      SubmissionStatus.cs  
-      ReviewSession.cs  
+        User.cs  
+        Group.cs  
+        GroupMember.cs  
+        GroupRole.cs  
+        InviteToken.cs  
+        Assignment.cs  
+        AssignmentVariant.cs  
+        Submission.cs  
+        SubmissionStatus.cs  
+        ReviewSession.cs  
     Services/  
-      RegistrationService.cs  
-      GroupService.cs  
-      AssignmentService.cs  
-      ReviewService.cs  
+        RegistrationService.cs  
+        GroupService.cs  
+        AssignmentService.cs  
+        ReviewService.cs  
     Transport/  
-      UpdateDto.cs             
+        UpdateDto.cs             
 
 Минимально нужно:
 .NET SDK 8.0  
@@ -73,8 +73,8 @@ CREATE DATABASE edumaxbot;
 
 Убедитесь, что пользователь/пароль из строки подключения существуют и имеют доступ к этой базе.
 
-При первом запуске на пустой БД схема создаётся автоматически через EnsureCreated().
-ЛОКАЛЬНО БЕЗ ДОКЕРА:
+При первом запуске на пустой БД схема создаётся автоматически через EnsureCreated().  
+ЛОКАЛЬНО БЕЗ ДОКЕРА:  
 ~ git clone https://github.com/ВАШ_АККАУНТ/ВАШ_РЕПОЗИТОРИЙ.git  
 ~ cd ВАШ_РЕПОЗИТОРИЙ/MaxEduBot  
 
