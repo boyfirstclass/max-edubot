@@ -41,7 +41,6 @@ public class AssignmentService
         _db.Assignments.Add(a);
         await _db.SaveChangesAsync();
 
-        // распределим варианты среди текущих студентов
         var students = await _groups.GetStudentsAsync(groupId);
         if (students.Count > 0)
         {
@@ -54,7 +53,6 @@ public class AssignmentService
             }
             await _db.SaveChangesAsync();
 
-            // Рассылка студентам
             foreach (var s in students)
             {
                 var v = await _db.AssignmentVariants.SingleAsync(x => x.AssignmentId == a.Id && x.UserId == s);
@@ -70,7 +68,6 @@ public class AssignmentService
             }
         }
 
-        // уведомим преподавателей — что задание создано
         var teachers = await _groups.GetTeachersAsync(groupId);
         foreach (var t in teachers)
         {
@@ -93,11 +90,9 @@ public class AssignmentService
         if (DateTime.UtcNow > a.DeadlineUtc)
             return new(false, "Дедлайн уже прошёл");
 
-        // найдём (или назначим) вариант для студента
         var av = await _db.AssignmentVariants.SingleOrDefaultAsync(x => x.AssignmentId == assignmentId && x.UserId == userId);
         if (av is null)
         {
-            // поздний участник — назначим вариант по хэшу
             var all = await _db.GroupMembers.Where(m => m.GroupId == a.GroupId && m.Role == GroupRole.Student)
                 .OrderBy(m => m.UserId).Select(m => m.UserId).ToListAsync();
             var idx = all.FindIndex(x => x == userId);
